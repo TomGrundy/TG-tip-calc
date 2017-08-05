@@ -15,19 +15,7 @@ class SettingsViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        let defaults = UserDefaults.standard
-        let percentage = defaults.string(forKey: "default_percentage") ?? "15%"
-        
-        switch percentage {
-            case "15%":
-                defaultTipSegmentedControl.setEnabled(true, forSegmentAt: 0)
-            case "18%":
-                defaultTipSegmentedControl.setEnabled(true, forSegmentAt: 1)
-            case "20%":
-                defaultTipSegmentedControl.setEnabled(true, forSegmentAt: 2)
-            default:
-                defaultTipSegmentedControl.setEnabled(true, forSegmentAt: 0)
-        }
+        loadDefaultPercentage()
         
         // Do any additional setup after loading the view.
     }
@@ -35,6 +23,10 @@ class SettingsViewController: UIViewController {
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        loadDefaultPercentage()
     }
     
     @IBAction func onBackPressed(_ sender: Any) {
@@ -57,6 +49,24 @@ class SettingsViewController: UIViewController {
                 break;
         }
         defaults.synchronize()
+    }
+    
+    func loadDefaultPercentage() {
+        let defaults = UserDefaults.standard
+        let percentage = defaults.string(forKey: "default_percentage") ?? "15%"
+        
+        switch percentage {
+        case "15%":
+            defaultTipSegmentedControl.selectedSegmentIndex = 0
+        case "18%":
+            defaultTipSegmentedControl.selectedSegmentIndex = 1
+        case "20%":
+            defaultTipSegmentedControl.selectedSegmentIndex = 2
+        default:
+            defaultTipSegmentedControl.selectedSegmentIndex = -1
+        }
+        
+        defaultTipSegmentedControl.sendActions(for: UIControlEvents.valueChanged)
     }
 
     /*

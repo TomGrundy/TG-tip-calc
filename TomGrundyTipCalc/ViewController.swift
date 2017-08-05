@@ -70,6 +70,17 @@ class ViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDele
         // Dispose of any resources that can be recreated.
     }
     
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        let defaults = UserDefaults.standard
+        let defaultPercentage = defaults.string(forKey: "default_percentage") ?? "not_set"
+        
+        if (defaultPercentage != "not_set") {
+            percentage = defaultPercentage
+            calculateValues()
+        }
+    }
+    
     func numberOfComponents(in pickerView: UIPickerView) -> Int {
         return 1
     }
