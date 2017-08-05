@@ -205,13 +205,50 @@
                     <view key="view" contentMode="scaleToFill" id="YaG-dd-Qlu">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Default Tip Percentage:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zWk-gg-FTp">
+                                <rect key="frame" x="16" y="118" width="180" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="Eiw-dx-KPw">
+                                <rect key="frame" x="62.5" y="175" width="250" height="29"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="250" id="8EY-4J-FXa"/>
+                                </constraints>
+                                <segments>
+                                    <segment title="15%"/>
+                                    <segment title="18%"/>
+                                    <segment title="20%"/>
+                                </segments>
+                                <connections>
+                                    <action selector="onDefaultChosen:" destination="auV-sk-L3q" eventType="valueChanged" id="l3h-G0-r3x"/>
+                                </connections>
+                            </segmentedControl>
+                        </subviews>
+                        <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="Eiw-dx-KPw" firstAttribute="centerX" secondItem="YaG-dd-Qlu" secondAttribute="centerX" id="0Na-eP-VQU"/>
+                            <constraint firstAttribute="leadingMargin" secondItem="zWk-gg-FTp" secondAttribute="leading" id="2Uu-Pq-UTn"/>
+                            <constraint firstItem="Eiw-dx-KPw" firstAttribute="top" secondItem="zWk-gg-FTp" secondAttribute="bottom" constant="36" id="Ebw-G0-mum"/>
+                            <constraint firstItem="zWk-gg-FTp" firstAttribute="top" secondItem="VJY-HV-V1P" secondAttribute="bottom" constant="54" id="uao-U6-cwY"/>
+                        </constraints>
                     </view>
-                    <navigationItem key="navigationItem" id="JoK-kh-CL9"/>
+                    <navigationItem key="navigationItem" id="JoK-kh-CL9">
+                        <barButtonItem key="leftBarButtonItem" title="Back" id="hHy-o3-18g">
+                            <connections>
+                                <action selector="onBackPressed:" destination="auV-sk-L3q" id="g6e-GZ-W7Y"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                    <connections>
+                        <outlet property="defaultTipSegmentedControl" destination="Eiw-dx-KPw" id="ag7-XM-F3y"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Ndd-OZ-ach" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1731" y="696"/>
+            <point key="canvasLocation" x="1730.4000000000001" y="694.90254872563719"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="GgV-AF-vLy">

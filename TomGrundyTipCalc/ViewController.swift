@@ -32,13 +32,16 @@ class ViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDele
     let sizeOfPickerItems: Int = 101
     var billTotal = 0.0
     var activeTextField = 0
-    var percentage = "0%"
-    var numberOfTippers = "0"
+    var percentage = "15%"
+    var numberOfTippers = "1"
     var basePicker:UIPickerView = UIPickerView()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
+        
+        let defaults = UserDefaults.standard
+        percentage = defaults.string(forKey: "default_percentage") ?? "15%"
         
         var index = 0;
         
@@ -58,6 +61,8 @@ class ViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDele
         ClosePickerUIView.isHidden = true
         
         billTotalInput.addTarget(self, action: #selector(textFieldDidChange(_:)), for: .editingChanged)
+        
+        calculateValues()
     }
 
     override func didReceiveMemoryWarning() {
