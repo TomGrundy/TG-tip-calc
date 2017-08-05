@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		BEABB71C1F363E9F007D8A65 /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEABB71B1F363E9F007D8A65 /* SettingsViewController.swift */; };
+		BEABB71E1F3650EC007D8A65 /* README.md in Sources */ = {isa = PBXBuildFile; fileRef = BEABB71D1F3650EC007D8A65 /* README.md */; };
 		BEEB316E1F250A3B007F920F /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEEB316D1F250A3B007F920F /* AppDelegate.swift */; };
 		BEEB31701F250A3B007F920F /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEEB316F1F250A3B007F920F /* ViewController.swift */; };
 		BEEB31731F250A3B007F920F /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = BEEB31711F250A3B007F920F /* Main.storyboard */; };
@@ -36,6 +37,7 @@
 
 /* Begin PBXFileReference section */
 		BEABB71B1F363E9F007D8A65 /* SettingsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
+		BEABB71D1F3650EC007D8A65 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		BEEB316A1F250A3B007F920F /* TomGrundyTipCalc.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TomGrundyTipCalc.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		BEEB316D1F250A3B007F920F /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		BEEB316F1F250A3B007F920F /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -79,6 +81,7 @@
 		BEEB31611F250A3B007F920F = {
 			isa = PBXGroup;
 			children = (
+				BEABB71D1F3650EC007D8A65 /* README.md */,
 				BEEB316C1F250A3B007F920F /* TomGrundyTipCalc */,
 				BEEB31811F250A3B007F920F /* TomGrundyTipCalcTests */,
 				BEEB318C1F250A3B007F920F /* TomGrundyTipCalcUITests */,
@@ -264,6 +267,7 @@
 			files = (
 				BEEB31701F250A3B007F920F /* ViewController.swift in Sources */,
 				BEEB316E1F250A3B007F920F /* AppDelegate.swift in Sources */,
+				BEABB71E1F3650EC007D8A65 /* README.md in Sources */,
 				BEABB71C1F363E9F007D8A65 /* SettingsViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
