@@ -22,7 +22,8 @@ class ViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDele
     @IBOutlet weak var numberOfTippersButton: UIButton!
     @IBOutlet weak var closePickerButton: UIButton!
     
-    @IBOutlet weak var pickerView: UIPickerView!
+    @IBOutlet weak var percentagePickerView: UIPickerView!
+    @IBOutlet weak var numberOfTippersPickerView: UIPickerView!
     
     @IBOutlet weak var ClosePickerUIView: UIView!
     
@@ -47,9 +48,13 @@ class ViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDele
             index = index + 1
         }
         
-        pickerView.dataSource = self
-        pickerView.delegate = self
-        pickerView.isHidden = true
+        percentagePickerView.dataSource = self
+        percentagePickerView.delegate = self
+        percentagePickerView.isHidden = true
+        numberOfTippersPickerView.dataSource = self
+        numberOfTippersPickerView.delegate = self
+        numberOfTippersPickerView.isHidden = true
+        
         ClosePickerUIView.isHidden = true
         
         billTotalInput.addTarget(self, action: #selector(textFieldDidChange(_:)), for: .editingChanged)
@@ -90,7 +95,6 @@ class ViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDele
         switch activeTextField {
             case 1:
                 percentage = pickerPercentage[row]
-                print(pickerPercentage[row])
                 calculateValues()
             case 2:
                 numberOfTippers = pickerNumberOfTippers[row]
@@ -103,7 +107,8 @@ class ViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDele
     }
 
     @IBAction func closePickerView(_ sender: Any) {
-        pickerView.isHidden = true
+        percentagePickerView.isHidden = true
+        numberOfTippersPickerView.isHidden = true
         ClosePickerUIView.isHidden = true
     }
     
@@ -115,25 +120,26 @@ class ViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDele
     
     @IBAction func tipPercentagePressed(_ sender: Any) {
         activeTextField = 1
-        pickerView.isHidden = false
+        percentagePickerView.isHidden = false
         ClosePickerUIView.isHidden = false
-        pickerView.reloadAllComponents()
+        percentagePickerView.reloadAllComponents()
     }
     
     
     @IBAction func numberOfTippersPressed(_ sender: Any) {
         activeTextField = 2
-        pickerView.isHidden = false
+        numberOfTippersPickerView.isHidden = false
         ClosePickerUIView.isHidden = false
-        pickerView.reloadAllComponents()
+        numberOfTippersPickerView.reloadAllComponents()
     }
     
     func calculateValues() {
-        let percentageDouble = Double(percentage) ?? 0.0
-        let tip: Double = percentageDouble * 1.01
-        print(tip)
+        let noPercentageSymbolIndex = percentage.index(percentage.endIndex, offsetBy: -1)
+        let percentageRange = percentage.startIndex ..< noPercentageSymbolIndex
+        let castablePercentage = percentage[percentageRange]
+        let percentageDouble = Double(castablePercentage) ?? 0.0
+        let tip: Double = percentageDouble * 0.01
         let totalTipPercentage: Double = tip + 1.0
-        print(totalTipPercentage)
         let total = billTotal * totalTipPercentage
         let totalTip = billTotal * tip
         let individualTotal: Double = total / Double(numberOfTippers)!
