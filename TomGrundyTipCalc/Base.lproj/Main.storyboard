@@ -188,6 +188,7 @@
                         <outlet property="tipPercentageButton" destination="kMf-9I-7NY" id="yyB-VW-uYl"/>
                         <outlet property="totalLabel" destination="Xim-K0-KPW" id="OB9-sm-cfg"/>
                         <outlet property="totalTipLabel" destination="SeF-Kr-ExH" id="raY-LY-c5P"/>
+                        <outlet property="totalsView" destination="XrJ-23-vCU" id="Wxo-vk-Ocs"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
@@ -207,13 +208,13 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Default Tip Percentage:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zWk-gg-FTp">
-                                <rect key="frame" x="16" y="118" width="180" height="21"/>
+                                <rect key="frame" x="16" y="84" width="180" height="21"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="Eiw-dx-KPw">
-                                <rect key="frame" x="62.5" y="175" width="250" height="29"/>
+                                <rect key="frame" x="62.5" y="119" width="250" height="29"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="250" id="8EY-4J-FXa"/>
                                 </constraints>
@@ -226,13 +227,37 @@
                                     <action selector="onDefaultChosen:" destination="auV-sk-L3q" eventType="valueChanged" id="l3h-G0-r3x"/>
                                 </connections>
                             </segmentedControl>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Currency type:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="XYp-Ex-3iX">
+                                <rect key="frame" x="16" y="192" width="134" height="24"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <segmentedControl opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="Q8X-xn-gLj">
+                                <rect key="frame" x="63" y="230" width="250" height="29"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="250" id="A17-dp-4vI"/>
+                                </constraints>
+                                <segments>
+                                    <segment title="$"/>
+                                    <segment title="£"/>
+                                    <segment title="€"/>
+                                </segments>
+                                <connections>
+                                    <action selector="onDefaultCurrencyChosen:" destination="auV-sk-L3q" eventType="valueChanged" id="ayz-Zv-xTQ"/>
+                                </connections>
+                            </segmentedControl>
                         </subviews>
                         <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
                         <constraints>
                             <constraint firstItem="Eiw-dx-KPw" firstAttribute="centerX" secondItem="YaG-dd-Qlu" secondAttribute="centerX" id="0Na-eP-VQU"/>
                             <constraint firstAttribute="leadingMargin" secondItem="zWk-gg-FTp" secondAttribute="leading" id="2Uu-Pq-UTn"/>
-                            <constraint firstItem="Eiw-dx-KPw" firstAttribute="top" secondItem="zWk-gg-FTp" secondAttribute="bottom" constant="36" id="Ebw-G0-mum"/>
-                            <constraint firstItem="zWk-gg-FTp" firstAttribute="top" secondItem="VJY-HV-V1P" secondAttribute="bottom" constant="54" id="uao-U6-cwY"/>
+                            <constraint firstAttribute="leadingMargin" secondItem="XYp-Ex-3iX" secondAttribute="leading" id="5hc-IQ-do4"/>
+                            <constraint firstItem="Eiw-dx-KPw" firstAttribute="top" secondItem="zWk-gg-FTp" secondAttribute="bottom" constant="14" id="Ebw-G0-mum"/>
+                            <constraint firstItem="Q8X-xn-gLj" firstAttribute="top" secondItem="XYp-Ex-3iX" secondAttribute="bottom" constant="14" id="Ml2-Pz-9Kq"/>
+                            <constraint firstItem="XYp-Ex-3iX" firstAttribute="top" secondItem="Eiw-dx-KPw" secondAttribute="bottom" constant="23" id="UTw-cc-Pn5"/>
+                            <constraint firstItem="Q8X-xn-gLj" firstAttribute="centerX" secondItem="YaG-dd-Qlu" secondAttribute="centerX" id="lLx-eY-WFc"/>
+                            <constraint firstItem="zWk-gg-FTp" firstAttribute="top" secondItem="VJY-HV-V1P" secondAttribute="bottom" constant="20" id="uao-U6-cwY"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="JoK-kh-CL9">
@@ -243,6 +268,7 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
+                        <outlet property="defaultCurrencySegmentedControl" destination="Q8X-xn-gLj" id="VWo-Wg-w7U"/>
                         <outlet property="defaultTipSegmentedControl" destination="Eiw-dx-KPw" id="ag7-XM-F3y"/>
                     </connections>
                 </viewController>

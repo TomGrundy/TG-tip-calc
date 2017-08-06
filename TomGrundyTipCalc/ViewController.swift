@@ -26,6 +26,7 @@ class ViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDele
     @IBOutlet weak var numberOfTippersPickerView: UIPickerView!
     
     @IBOutlet weak var ClosePickerUIView: UIView!
+    @IBOutlet weak var totalsView: UIView!
     
     var pickerPercentage: [String] = [String]()
     var pickerNumberOfTippers: [String] = [String]()
@@ -60,9 +61,28 @@ class ViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDele
         
         ClosePickerUIView.isHidden = true
         
+        billTotalInput.delegate = self as? UITextFieldDelegate
+        billTotalInput.keyboardType = UIKeyboardType.decimalPad
         billTotalInput.addTarget(self, action: #selector(textFieldDidChange(_:)), for: .editingChanged)
+        addDoneButton()
+        
+        let timeBillTotalSaved = defaults.double(forKey: "bill_total_time_saved")
+        let tenMinutes: Double = 60*10.0
+        if (NSDate().timeIntervalSince1970 <= timeBillTotalSaved + tenMinutes) {
+            let savedBillTotal: Double = defaults.double(forKey: "bill_total")
+            if (savedBillTotal != 0) {
+                billTotal = savedBillTotal
+                billTotalInput.text = "\(billTotal)"
+                calculateValues()
+            }
+        }
         
         calculateValues()
+        
+        let when = DispatchTime.now() + 0.3
+        DispatchQueue.main.asyncAfter(deadline: when) {
+            self.billTotalInput.becomeFirstResponder()
+        }
     }
 
     override func didReceiveMemoryWarning() {
@@ -78,6 +98,7 @@ class ViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDele
         if (defaultPercentage != "not_set") {
             percentage = defaultPercentage
             calculateValues()
+            animateTotalsViewChange()
         }
     }
     
@@ -112,13 +133,16 @@ class ViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDele
             case 1:
                 percentage = pickerPercentage[row]
                 calculateValues()
+                animateTotalsViewChange()
             case 2:
                 numberOfTippers = pickerNumberOfTippers[row]
                 calculateValues()
+                animateTotalsViewChange()
             default:
                 percentage = ""
                 numberOfTippers = ""
                 calculateValues()
+                animateTotalsViewChange()
         }
     }
 
@@ -131,7 +155,12 @@ class ViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDele
     
     func textFieldDidChange(_ textField: UITextField) {
         billTotal = Double(billTotalInput.text ?? "0.0") ?? 0.0
+        let defaults = UserDefaults.standard
+        defaults.set(billTotal, forKey: "bill_total")
+        defaults.set(NSDate().timeIntervalSince1970, forKey: "bill_total_time_saved")
+//        billTotalInput.text = "\(billTotal)"
         calculateValues()
+        animateTotalsViewChange()
     }
     
     @IBAction func tipPercentagePressed(_ sender: Any) {
@@ -150,6 +179,12 @@ class ViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDele
     }
     
     func calculateValues() {
+        let defaults = UserDefaults.standard
+        let defaultCurrency = defaults.string(forKey: "default_currency") ?? "$"
+        let numberFormatter = NumberFormatter()
+        numberFormatter.numberStyle = NumberFormatter.Style.currency
+        numberFormatter.locale = defaultCurrency == "€" ? Locale(identifier: "fr_FR") : defaultCurrency == "£" ? Locale(identifier: "en_GB") : Locale(identifier: "en_US")
+        
         let noPercentageSymbolIndex = percentage.index(percentage.endIndex, offsetBy: -1)
         let percentageRange = percentage.startIndex ..< noPercentageSymbolIndex
         let castablePercentage = percentage[percentageRange]
@@ -163,10 +198,32 @@ class ViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDele
         
         tipPercentageButton.setTitle("Tip Percentage: \(percentage)", for: .normal)
         numberOfTippersButton.setTitle("Number of Tippers: \(numberOfTippers)", for: .normal)
-        totalLabel.text = "$\(round(total * 100)/100)"
-        totalTipLabel.text = "$\(round(totalTip * 100)/100)"
-        individualTipLabel.text = "$\(round(individualTip * 100)/100)"
-        individualTotalLabel.text = "$\(round(individualTotal * 100)/100)"
+        totalLabel.text = "\(numberFormatter.string(from: NSNumber(value: total))!)"
+        totalTipLabel.text = "\(numberFormatter.string(from: NSNumber(value: totalTip))!)"
+        individualTipLabel.text = "\(numberFormatter.string(from: NSNumber(value: individualTip))!)"
+        individualTotalLabel.text = "\(numberFormatter.string(from: NSNumber(value: individualTotal))!)"
+    }
+    
+    func animateTotalsViewChange() {
+        let firstAlphaValue: CGFloat = totalsView.alpha == 0.0 ? 1.0 : 0.0
+        let secondAlphaValue: CGFloat = totalsView.alpha == 0.0 ? 0.0 : 1.0
+        UIView.animate(withDuration: 0.25, animations: {
+            self.totalsView.alpha = firstAlphaValue
+        })
+        UIView.animate(withDuration: 0.25, delay: 0.25, animations: {
+            self.totalsView.alpha = secondAlphaValue
+        })
+    }
+    
+    func addDoneButton() {
+        let keyboardToolbar = UIToolbar()
+        keyboardToolbar.sizeToFit()
+        let flexBarButton = UIBarButtonItem(barButtonSystemItem: .flexibleSpace,
+                                            target: nil, action: nil)
+        let doneBarButton = UIBarButtonItem(barButtonSystemItem: .done,
+                                            target: view, action: #selector(UIView.endEditing(_:)))
+        keyboardToolbar.items = [flexBarButton, doneBarButton]
+        billTotalInput.inputAccessoryView = keyboardToolbar
     }
 }
 

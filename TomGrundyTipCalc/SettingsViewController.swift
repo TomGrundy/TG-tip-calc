@@ -11,11 +11,13 @@ import UIKit
 class SettingsViewController: UIViewController {
     
     @IBOutlet weak var defaultTipSegmentedControl: UISegmentedControl!
+    @IBOutlet weak var defaultCurrencySegmentedControl: UISegmentedControl!
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        loadDefaultPercentage()
+        loadDefaults()
         
         // Do any additional setup after loading the view.
     }
@@ -26,7 +28,7 @@ class SettingsViewController: UIViewController {
     }
     
     override func viewDidAppear(_ animated: Bool) {
-        loadDefaultPercentage()
+        loadDefaults()
     }
     
     @IBAction func onBackPressed(_ sender: Any) {
@@ -51,22 +53,52 @@ class SettingsViewController: UIViewController {
         defaults.synchronize()
     }
     
-    func loadDefaultPercentage() {
+    @IBAction func onDefaultCurrencyChosen(_ sender: UISegmentedControl) {
+        let defaults = UserDefaults.standard
+        
+        switch sender.selectedSegmentIndex {
+            case 0:
+                defaults.set("$", forKey: "default_currency")
+            case 1:
+                defaults.set("£", forKey: "default_currency")
+            case 2:
+                defaults.set("€", forKey: "default_currency")
+            default:
+                break;
+        }
+        defaults.synchronize()
+    }
+    
+    
+    func loadDefaults() {
         let defaults = UserDefaults.standard
         let percentage = defaults.string(forKey: "default_percentage") ?? "15%"
+        let currency = defaults.string(forKey: "default_currency") ?? "$"
         
         switch percentage {
-        case "15%":
-            defaultTipSegmentedControl.selectedSegmentIndex = 0
-        case "18%":
-            defaultTipSegmentedControl.selectedSegmentIndex = 1
-        case "20%":
-            defaultTipSegmentedControl.selectedSegmentIndex = 2
-        default:
-            defaultTipSegmentedControl.selectedSegmentIndex = -1
+            case "15%":
+                defaultTipSegmentedControl.selectedSegmentIndex = 0
+            case "18%":
+                defaultTipSegmentedControl.selectedSegmentIndex = 1
+            case "20%":
+                defaultTipSegmentedControl.selectedSegmentIndex = 2
+            default:
+                defaultTipSegmentedControl.selectedSegmentIndex = -1
+        }
+        
+        switch currency {
+            case "$":
+                defaultCurrencySegmentedControl.selectedSegmentIndex = 0
+            case "£":
+                defaultCurrencySegmentedControl.selectedSegmentIndex = 1
+            case "€":
+                defaultCurrencySegmentedControl.selectedSegmentIndex = 2
+            default:
+                defaultCurrencySegmentedControl.selectedSegmentIndex = -1
         }
         
         defaultTipSegmentedControl.sendActions(for: UIControlEvents.valueChanged)
+        defaultCurrencySegmentedControl.sendActions(for: UIControlEvents.valueChanged)
     }
 
     /*
