@@ -27,6 +27,9 @@
                                 <nil key="textColor"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="40"/>
                                 <textInputTraits key="textInputTraits"/>
+                                <connections>
+                                    <action selector="billTotalEditingBegun:" destination="BYZ-38-t0r" eventType="editingDidBegin" id="0I1-vU-FPd"/>
+                                </connections>
                             </textField>
                             <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="kMf-9I-7NY">
                                 <rect key="frame" x="80" y="176" width="215" height="42"/>

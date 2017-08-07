@@ -164,6 +164,7 @@ class ViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDele
     }
     
     @IBAction func tipPercentagePressed(_ sender: Any) {
+        billTotalInput.resignFirstResponder()
         activeTextField = 1
         percentagePickerView.isHidden = false
         ClosePickerUIView.isHidden = false
@@ -172,6 +173,7 @@ class ViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDele
     
     
     @IBAction func numberOfTippersPressed(_ sender: Any) {
+        billTotalInput.resignFirstResponder()
         activeTextField = 2
         numberOfTippersPickerView.isHidden = false
         ClosePickerUIView.isHidden = false
@@ -225,6 +227,11 @@ class ViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDele
         keyboardToolbar.items = [flexBarButton, doneBarButton]
         billTotalInput.inputAccessoryView = keyboardToolbar
     }
+    
+    @IBAction func billTotalEditingBegun(_ sender: Any) {
+        self.closePickerView(billTotalInput)
+    }
+    
 }
 
 
